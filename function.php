@@ -21,7 +21,7 @@ function login($data)
     $pass_login = $data["password"];
 
     $query = "SELECT * FROM guru WHERE 
-            NIP = '$NIP_login' AND password = '$pass_login'";
+            NIP IN('$NIP_login') AND password IN ('$pass_login')";
 
     $result = mysqli_query($database, $query);
 
@@ -75,6 +75,46 @@ function readAVG($NIS)
 function update()
 {
 
+}
+
+function sortnilai($data){
+    $sortby = $data['sortby'];
+    $range1 = $data['range1'];
+    $range2 = $data['range2'];
+
+    if(($range1 == NULL && $range2 == NULL) && $sortby != 'AVG'){
+        $result = query("SELECT s.NIS, s.absen, s.nama  FROM siswa s 
+            JOIN guru g ON s.kodeKelas = g.kodeKelas 
+            JOIN login l ON g.NIP = l.NIP
+            JOIN sumnilai sn ON s.NIS = sn.NIS
+            WHERE sn.kodeMapel IN('$sortby')
+            ORDER BY sn.AVG DESC");
+        return $result;
+    } else if(($range1 == NULL && $range2 == NULL) && $sortby == 'AVG') {
+        $result = query("SELECT s.NIS, s.absen, s.nama  FROM siswa s 
+            JOIN guru g ON s.kodeKelas = g.kodeKelas 
+            JOIN login l ON g.NIP = l.NIP
+            JOIN avgnilai an ON s.NIS = an.NIS
+            ORDER BY an.AVGNilai DESC");
+        return $result;
+    } else if(($range1 != NULL || $range2 != NULL) && $sortby != 'AVG'){
+        $result = query("SELECT s.NIS, s.absen, s.nama  FROM siswa s 
+            JOIN guru g ON s.kodeKelas = g.kodeKelas 
+            JOIN login l ON g.NIP = l.NIP
+            JOIN sumnilai sn ON s.NIS = sn.NIS
+            WHERE sn.AVG BETWEEN '$range1' AND '$range2'
+                AND sn.kodeMapel IN('$sortby')
+            ORDER BY sn.AVG DESC");
+        return $result;
+    } else {
+        $result = query("SELECT s.NIS, s.absen, s.nama  FROM siswa s 
+            JOIN guru g ON s.kodeKelas = g.kodeKelas 
+            JOIN login l ON g.NIP = l.NIP
+            JOIN avgnilai an ON s.NIS = an.NIS
+            WHERE an.AVGNilai BETWEEN '$range1' AND '$range2'
+            ORDER BY an.AVGNilai DESC");
+        return $result;
+    }
 }
 
 function delete($absen)

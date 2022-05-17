@@ -2,8 +2,13 @@
 
     require 'function.php';
 
-    $siswa = query("SELECT s.NIS, s.absen, s.nama  FROM siswa s 
-         JOIN guru g ON s.kodeKelas = g.kodeKelas JOIN login l ON g.NIP = l.NIP");
+    if(isset($_POST["sort"])){
+        $siswa = sortnilai($_POST);
+    } else {
+        $siswa = query("SELECT s.NIS, s.absen, s.nama  FROM siswa s 
+            JOIN guru g ON s.kodeKelas = g.kodeKelas JOIN login l ON g.NIP = l.NIP
+            ORDER BY s.NIS");
+    }
 
     $guru = query("SELECT * FROM guru g JOIN login l ON g.NIP = l.NIP");
     $kelas = $guru[0]['kodeKelas'];
@@ -26,6 +31,22 @@
         <a href="home.php">Home</a>  |  <a href="nilai.php">Nilai</a>
         <br><br>
     </div>
+    <div class="sortBy">
+        <form action="" method="post">
+            <label for="sortby">Sort Nilai By </label>
+            <select name="sortby" id="sortby" >
+                <?php foreach($mapel as $eachmapel): ?>
+                    <option value="<?=$eachmapel['kodeMapel']?>"><?=$eachmapel['kodeMapel']?></option>
+                <?php endforeach ?>
+                <option value="AVG">AVG</option>
+            </select>
+            <label for="range">Range </label>
+            <input type="text" name="range1" id="range"> <label for="to">to </label> <input type="text" name="range2" id="to">
+            <br>
+            <button type="submit" name="sort">sort</button>
+        </form>
+    </div>
+    <br><br>
     <!-- Record data -->
     <table border="1" cellpadding="10" cellspacing="0" >
         <tr>
@@ -34,7 +55,7 @@
             <?php foreach($mapel as $eachmapel):?>
                 <th><?=$eachmapel['kodeMapel']?></th>
             <?php endforeach ?>
-            <td>AVG</td>
+            <th>AVG</th>
         </tr>
 
         <?php foreach($siswa as $row) : ?>
