@@ -1,11 +1,14 @@
 <?php
 
     require 'function.php';
+
+    //Menu Delete
     $delete = $_GET;
     if ($delete != NULL) {
         delete((int)$delete['id']);
     }
-    $siswa = query("SELECT s.absen, s.nama FROM siswa s 
+
+    $siswa = query("SELECT s.NIS, s.absen, s.nama FROM siswa s 
     JOIN guru g ON s.kodeKelas = g.kodeKelas JOIN login l ON g.NIP = l.NIP");
 
     $guru = query("SELECT * FROM guru g JOIN login l ON g.NIP = l.NIP");
@@ -41,7 +44,7 @@
             <td><?= $row["absen"] ?></td>
             <td><?= $row["nama"] ?></td>
             <td>
-                <a href="editData.php?id=<?= $row['absen']; ?>">Edit</a> | <a href="home.php?id=<?= $row['absen']; ?>">Delete</a> | <a href="rincianNilai.php?id=<?= $row['absen']; ?>">Rician</a>
+                <a href="editData.php?id=<?= $row['NIS']; ?>">Edit</a> | <a href="home.php?id=<?= $row['absen']; ?>">Delete</a> | <a href="rincianNilai.php?id=<?= $row['absen']; ?>">Rician</a>
             </td>
         </tr>
         <?php endforeach ?>

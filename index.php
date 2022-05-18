@@ -37,20 +37,20 @@ if(isset($_POST["submit"])){
         <h1>SI-WALI</h1>
         <h2>Sistem Wali Kelas</h2>
     </div>
-    <ul>
-        <form action="" method="POST">
-            <li>
-                <label for="NIP">NIP : </label>
-                <input type="text" name="NIP" id="NIP" required>
-            </li>
-            <li>
-                <label for="password">Password : </label>
-                <input type="password" name="password" id="password" required>
-            </li>
-            <li>
-                <button type="submit" name="submit">Login</button>
-            </li>
-        </form>
-    </ul>
+    <form action="" method="POST" autocomplete="off">
+        <table border="0" cellpadding="5" cellspacing="0" >
+            <tr>
+                <th><label for="NIP">NIP : </label></th>
+                <td>: <input type="text" name="NIP" id="NIP" required></td>
+            </tr>
+            <tr>
+                <th><label for="password">Password : </label></th>
+                <td>: <input type="password" name="password" id="password" required></td>
+            </tr>
+            <tr>
+                <th><button type="submit" name="submit">Login</button></th>
+            </tr>
+        </table>
+    </form>
 </body>
 </html>

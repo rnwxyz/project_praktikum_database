@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>home</title>
+    <title>nilai</title>
 </head>
 <body>
     <div class="header">
@@ -32,7 +32,8 @@
         <br><br>
     </div>
     <div class="sortBy">
-        <form action="" method="post">
+        <form action="" method="post" autocomplete="off">
+
             <label for="sortby">Sort Nilai By </label>
             <select name="sortby" id="sortby" >
                 <?php foreach($mapel as $eachmapel): ?>
@@ -40,9 +41,15 @@
                 <?php endforeach ?>
                 <option value="AVG">AVG</option>
             </select>
+
             <label for="range">Range </label>
             <input type="text" name="range1" id="range"> <label for="to">to </label> <input type="text" name="range2" id="to">
             <br>
+            <input type="radio" id="desc" name="tipe" value="DESC" checked>
+            <label for="desc">DESC</label>
+            <input type="radio" id="asc" name="tipe" value="ASC">
+            <label for="asc">ASC</label>
+            <br><br>
             <button type="submit" name="sort">sort</button>
         </form>
     </div>

@@ -29,13 +29,14 @@
 
 -- Create view sumnilai
 -- CREATE VIEW sumNilai AS
--- SELECT NIS, kodeMapel, (nilaiTugas + nilaiQuiz + nilaiUTS + nilaiUAS)/4 AS AVG 
--- FROM nilai; 
+-- SELECT n.NIS, n.kodeMapel, (n.nilaiTugas + n.nilaiQuiz + n.nilaiUTS + n.nilaiUAS)/4 AS AVG 
+-- FROM nilai n JOIN siswa s ON n.NIS = s.NIS;
 
--- Create View avgnilai
+-- Create view avgnilai
 -- CREATE VIEW avgnilai AS
--- SELECT NIS, CAST(SUM(AVG)/COUNT(NIS) AS DECIMAL(19,2)) AS AVGNilai 
--- FROM sumnilai GROUP BY NIS;
+-- SELECT sn.NIS, s.absen, CAST(AVG(sn.AVG) AS DECIMAL(19,2)) AS AVGNilai 
+-- FROM sumnilai sn JOIN siswa s ON sn.NIS = s.NIS 
+-- GROUP BY sn.NIS HAVING s.absen NOT LIKE 'NULL';
 
 -- Create trigger
 -- DELIMITER $$
