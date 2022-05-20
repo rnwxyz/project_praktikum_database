@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 17, 2022 at 09:47 AM
+-- Generation Time: May 20, 2022 at 01:28 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -24,11 +24,26 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Stand-in structure for view `admin_view`
+-- (See below for the actual view)
+--
+CREATE TABLE `admin_view` (
+`kodeUnik` varchar(20)
+,`nama` varchar(255)
+,`kodeKelas` varchar(20)
+,`alamat` varchar(100)
+,`telepon` varchar(20)
+);
+
+-- --------------------------------------------------------
+
+--
 -- Stand-in structure for view `avgnilai`
 -- (See below for the actual view)
 --
 CREATE TABLE `avgnilai` (
 `NIS` int(11)
+,`absen` int(11)
 ,`AVGNilai` decimal(19,2)
 );
 
@@ -42,16 +57,18 @@ CREATE TABLE `guru` (
   `NIP` varchar(20) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `kodeKelas` varchar(20) NOT NULL,
-  `password` varchar(20) NOT NULL
+  `password` varchar(20) NOT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `telepon` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `guru`
 --
 
-INSERT INTO `guru` (`NIP`, `nama`, `kodeKelas`, `password`) VALUES
-('2008561065', 'Rian Wijaya', 'MIPA1', 'rian1111'),
-('2008561100', 'Dio Pratama', 'IIS1', 'dio1111');
+INSERT INTO `guru` (`NIP`, `nama`, `kodeKelas`, `password`, `alamat`, `telepon`) VALUES
+('2008561065', 'Rian Wijaya', 'MIPA1', 'rian', 'Penida Kaja', '111222333444'),
+('2008561999', 'Dio', 'IIS1', 'dio', 'Tabanan', '082234567890');
 
 -- --------------------------------------------------------
 
@@ -90,13 +107,6 @@ CREATE TABLE `login` (
   `NIP` varchar(20) DEFAULT NULL,
   `password` varchar(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `login`
---
-
-INSERT INTO `login` (`id`, `NIP`, `password`) VALUES
-(42, '2008561065', 'rian1111');
 
 -- --------------------------------------------------------
 
@@ -144,6 +154,32 @@ CREATE TABLE `nilai` (
   `nilaiUAS` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `nilai`
+--
+
+INSERT INTO `nilai` (`NIS`, `id`, `kodeMapel`, `nilaiTugas`, `nilaiQuiz`, `nilaiUTS`, `nilaiUAS`) VALUES
+(24, 95, 'BIO', 52, 60, 90, 74),
+(24, 96, 'FIS', 88, 77, 55, 40),
+(24, 97, 'KIM', 90, 90, 90, 90),
+(24, 98, 'MTK', 80, 80, 70, 70),
+(25, 99, 'BIO', 80, 70, 50, 88),
+(25, 100, 'FIS', 90, 70, 40, 80),
+(25, 101, 'KIM', 50, 70, 80, 90),
+(25, 102, 'MTK', 70, 80, 60, 30),
+(26, 103, 'BIO', 55, 68, 80, 50),
+(26, 104, 'FIS', 64, 70, 38, 80),
+(26, 105, 'KIM', 58, 90, 78, 68),
+(26, 106, 'MTK', 69, 65, 90, 33),
+(27, 107, 'EKM', 70, 70, 80, 80),
+(27, 108, 'GEO', 80, 20, 60, 40),
+(27, 109, 'SJR', 66, 66, 66, 66),
+(27, 110, 'SOS', 60, 54, 70, 70),
+(28, 111, 'EKM', 90, 88, 76, 76),
+(28, 112, 'GEO', 88, 55, 77, 89),
+(28, 113, 'SJR', 54, 70, 80, 66),
+(28, 114, 'SOS', 44, 55, 56, 54);
+
 -- --------------------------------------------------------
 
 --
@@ -154,8 +190,21 @@ CREATE TABLE `siswa` (
   `NIS` int(11) NOT NULL,
   `nama` varchar(255) DEFAULT NULL,
   `absen` int(11) DEFAULT NULL,
-  `kodeKelas` varchar(20) DEFAULT NULL
+  `kodeKelas` varchar(20) DEFAULT NULL,
+  `alamat` varchar(100) NOT NULL,
+  `telepon` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `siswa`
+--
+
+INSERT INTO `siswa` (`NIS`, `nama`, `absen`, `kodeKelas`, `alamat`, `telepon`) VALUES
+(24, 'Bayu', 1, 'MIPA1', 'Badung Jimbaran', '000999888777'),
+(25, 'Agus', 2, 'MIPA1', 'Banyuwangi', '222111333444'),
+(26, 'Agung', 3, 'MIPA1', 'Bojonegoro', '998877665544'),
+(27, 'Bagus DIto', 1, 'IIS1', 'Bandung Banyuwangi', '111222333444'),
+(28, 'Anjani', 2, 'IIS1', 'Banyuwangi', '000999888777');
 
 --
 -- Triggers `siswa`
@@ -192,9 +241,19 @@ DELIMITER ;
 --
 CREATE TABLE `sumnilai` (
 `NIS` int(11)
+,`absen` int(11)
 ,`kodeMapel` varchar(20)
 ,`AVG` decimal(19,2)
 );
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `admin_view`
+--
+DROP TABLE IF EXISTS `admin_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `admin_view`  AS SELECT `guru`.`NIP` AS `kodeUnik`, `guru`.`nama` AS `nama`, `guru`.`kodeKelas` AS `kodeKelas`, `guru`.`alamat` AS `alamat`, `guru`.`telepon` AS `telepon` FROM `guru` ;
 
 -- --------------------------------------------------------
 
@@ -203,7 +262,7 @@ CREATE TABLE `sumnilai` (
 --
 DROP TABLE IF EXISTS `avgnilai`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `avgnilai`  AS SELECT `sumnilai`.`NIS` AS `NIS`, cast(sum(`sumnilai`.`AVG`) / count(`sumnilai`.`NIS`) as decimal(19,2)) AS `AVGNilai` FROM `sumnilai` GROUP BY `sumnilai`.`NIS` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `avgnilai`  AS SELECT `sn`.`NIS` AS `NIS`, `s`.`absen` AS `absen`, cast(avg(`sn`.`AVG`) as decimal(19,2)) AS `AVGNilai` FROM (`sumnilai` `sn` join `siswa` `s` on(`sn`.`NIS` = `s`.`NIS`)) GROUP BY `sn`.`NIS` HAVING `s`.`absen` not like 'NULL' ;
 
 -- --------------------------------------------------------
 
@@ -212,7 +271,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `sumnilai`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sumnilai`  AS SELECT `nilai`.`NIS` AS `NIS`, `nilai`.`kodeMapel` AS `kodeMapel`, cast((`nilai`.`nilaiTugas` + `nilai`.`nilaiQuiz` + `nilai`.`nilaiUTS` + `nilai`.`nilaiUAS`) / 4 as decimal(19,2)) AS `AVG` FROM `nilai` ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sumnilai`  AS SELECT `n`.`NIS` AS `NIS`, `s`.`absen` AS `absen`, `n`.`kodeMapel` AS `kodeMapel`, cast((`n`.`nilaiTugas` + `n`.`nilaiQuiz` + `n`.`nilaiUTS` + `n`.`nilaiUAS`) / 4 as decimal(19,2)) AS `AVG` FROM (`nilai` `n` join `siswa` `s` on(`n`.`NIS` = `s`.`NIS`)) ;
 
 --
 -- Indexes for dumped tables
@@ -223,7 +282,7 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 ALTER TABLE `guru`
   ADD PRIMARY KEY (`NIP`),
-  ADD KEY `kodeKelas_c` (`kodeKelas`);
+  ADD KEY `kelas` (`kodeKelas`);
 
 --
 -- Indexes for table `kelas`
@@ -266,19 +325,19 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=71;
 
 --
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `NIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `NIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Constraints for dumped tables
@@ -288,13 +347,7 @@ ALTER TABLE `siswa`
 -- Constraints for table `guru`
 --
 ALTER TABLE `guru`
-  ADD CONSTRAINT `kodeKelas_c` FOREIGN KEY (`kodeKelas`) REFERENCES `kelas` (`kodeKelas`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `login`
---
-ALTER TABLE `login`
-  ADD CONSTRAINT `login_ibfk_1` FOREIGN KEY (`NIP`) REFERENCES `guru` (`NIP`);
+  ADD CONSTRAINT `kelas` FOREIGN KEY (`kodeKelas`) REFERENCES `kelas` (`kodeKelas`);
 
 --
 -- Constraints for table `nilai`
