@@ -12,6 +12,13 @@ if(isset($_POST["submit"])){
                 document.location.href = 'home.php';
             </script>
         ";
+    } else if (login($_POST) == 2) {
+        echo "
+            <script>
+                alert('Login Admin Berhasil');
+                document.location.href = 'admin.php';
+            </script>
+        ";
     } else {
         echo "
             <script>
@@ -21,7 +28,6 @@ if(isset($_POST["submit"])){
         ";
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -40,17 +46,20 @@ if(isset($_POST["submit"])){
     <form action="" method="POST" autocomplete="off">
         <table border="0" cellpadding="5" cellspacing="0" >
             <tr>
-                <th><label for="NIP">NIP : </label></th>
+                <th><label for="NIP">NIP </label></th>
                 <td>: <input type="text" name="NIP" id="NIP" required></td>
             </tr>
             <tr>
-                <th><label for="password">Password : </label></th>
+                <th><label for="password">Password </label></th>
                 <td>: <input type="password" name="password" id="password" required></td>
             </tr>
             <tr>
                 <th><button type="submit" name="submit">Login</button></th>
             </tr>
         </table>
+    </form>
+    <form action="createGuru.php">
+        <th><button type="submit" name="baut">Buat Akun</button></th>
     </form>
 </body>
 </html>

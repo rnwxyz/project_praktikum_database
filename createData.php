@@ -1,17 +1,33 @@
 <?php
 
     require 'function.php';
-    $guru = query("SELECT * FROM guru g JOIN login l ON g.NIP = l.NIP");
-    $kelas = $guru[0]['kodeKelas'];
-    $namaGuru = $guru[0]['nama'];
-    if(isset($_POST["submit"])){
-        if (createSiswa($_POST) == 1) {
-            echo "
-                <script>
-                    alert('Create Berhasil');
-                    document.location.href = 'home.php';
-                </script>
-            ";
+
+    $guru = readGuru();
+    if($guru == NULL){
+        $kelas = "";
+        $namaGuru = "";
+        if(isset($_POST["submit"])){
+            if (createSiswa($_POST) == 1) {
+                echo "
+                    <script>
+                        alert('Create Berhasil');
+                        document.location.href = 'admin.php';
+                    </script>
+                ";
+            }
+        }
+    } else {
+        $kelas = $guru[0]['kodeKelas'];
+        $namaGuru = $guru[0]['nama'];
+        if(isset($_POST["submit"])){
+            if (createSiswa($_POST) == 1) {
+                echo "
+                    <script>
+                        alert('Create Berhasil');
+                        document.location.href = 'home.php';
+                    </script>
+                ";
+            }
         }
     }
 ?>
@@ -26,9 +42,16 @@
 </head>
 <body>
     <div class="header">
-        <h1><?= "Kelas : $kelas"?></h1>
+        <h1><?= "$kelas"?></h1>
         <h2><?= "$namaGuru"?></h2>
         <h3>Create Siswa</h3>
+    </div>
+    <div class="back">
+        <?php if ($guru == NULL): ?>
+            <h4><a href="admin.php">Back</a></h4>
+        <?php else : ?>
+            <h4><a href="home.php">Back</a></h4>
+        <?php endif ?>
     </div>
     <!-- Record data -->
     <ul>
@@ -43,8 +66,16 @@
                     <td>: <input type="text" name="absen" id="absen" required></td>
                 </tr>
                 <tr>
-                    <th><label for="kodeKelas">Kelas </label></th>
-                    <td>: <input type="text" name="kodeKelas" id="kodeKelas" required></td>
+                    <th><label for="alamat">Alamat </label></th>
+                    <td>: <input type="text" name="alamat" id="alamat" required></td>
+                </tr>
+                <tr>
+                    <th><label for="telpon">No Telepon </label></th>
+                    <td>: <input type="text" name="telepon" id="telepon" required></td>
+                </tr>
+                <tr>
+                    <th><input type="text" name="kodeKelas" value="<?=$kelas?>" hidden>
+                    </td>
                 </tr>
                 <tr>
                     <th><button type="submit" name="submit">Create</button></th>

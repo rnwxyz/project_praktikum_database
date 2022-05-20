@@ -1,16 +1,11 @@
 <?php
-
     require 'function.php';
-
     $delete = $_GET;
     if ($delete != NULL) {
-        deleteSiswa((int)$delete['id']);
+        deleteSiswa($delete['id']);
+        deleteGuru($delete['id']);
     }
-
-    $siswa = readSiswa();
-    $guru = readGuru();
-    $kelas = $guru[0]['kodeKelas'];
-    $namaGuru = $guru[0]['nama'];
+    $admin = admin();
 ?>
 
 <!DOCTYPE html>
@@ -23,32 +18,38 @@
 </head>
 <body>
     <div class="header">
-        <h1><?= "Kelas : $kelas"?></h1>
-        <h2><?= "$namaGuru"?></h2>
-        <a href="home.php">Home</a>  |  <a href="nilai.php">Nilai</a>
+        <h1><?= "Admin"?></h1>
+        
         <br><br>
     </div>
     <!-- Record data -->
     <table border="1" cellpadding="10" cellspacing="0" >
         <tr>
-            <th>No Absen</th>
+            <th>Kode Unik</th>
             <th>Nama</th>
+            <th>Kelas</th>
+            <th>Alamat</th>
+            <th>Telepon</th>
             <th>Aksi</th>
         </tr>
 
-        <?php foreach($siswa as $row) : ?>
+        <?php foreach($admin as $row) : ?>
         <tr>
-            <td><?= $row["absen"] ?></td>
+            <td><?= $row["kodeUnik"] ?></td>
             <td><?= $row["nama"] ?></td>
+            <td><?= $row["kodeKelas"] ?></td>
+            <td><?= $row["alamat"] ?></td>
+            <td><?= $row["telepon"] ?></td>
             <td>
-                <a href="home.php?id=<?= $row['absen']; ?>">Delete</a>
+                <a href="admin.php?id=<?= $row['kodeUnik']; ?>">Delete</a>
             </td>
         </tr>
         <?php endforeach ?>
     </table>
     <br>
-    <a href="createData.php">Input Siswa Baru</a>
+    <a href="createData.php">Siswa Baru</a>
+    <br>
+    <a href="createGuru.php">Guru Baru</a>
     <br>
     <a href="index.php">Logout</a>
 </body>
-</html>

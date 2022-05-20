@@ -20,6 +20,12 @@ function login($data)
     $NIP_login = $data["NIP"];
     $pass_login = $data["password"];
 
+    if ($NIP_login == 'admin' AND $pass_login = 'admin'){
+        $query = "INSERT INTO login(NIP, password) VALUES
+            ('$NIP_login', '$pass_login')";
+        mysqli_query($database, $query);
+        return 2;
+    }
     $query = "SELECT * FROM guru WHERE 
             NIP IN('$NIP_login') AND password IN ('$pass_login')";
 
@@ -42,15 +48,52 @@ function createSiswa($data){
     $in_absen = $data['absen'];
     $in_nama = $data['nama'];
     $in_kodeKelas = $data['kodeKelas'];
+    $in_alamat = $data['alamat'];
+    $in_telepon = $data['telepon'];
 
-    $query = "INSERT INTO siswa(absen, nama, kodeKelas) VALUES
-        ('$in_absen', '$in_nama', '$in_kodeKelas')";
+    $query = "INSERT INTO siswa(absen, nama, kodeKelas, alamat, telepon) VALUES
+        ('$in_absen', '$in_nama', '$in_kodeKelas', '$in_alamat', '$in_telepon')";
 
     if (mysqli_query($database, $query)) {
         return 1;
     } else {
         return 0;
     }
+}
+
+function createGuru($data){
+    global $database;
+
+    $in_NIP = $data['NIP'];
+    $in_nama = $data['nama'];
+    $in_kodeKelas = $data['kodeKelas'];
+    $in_password = $data['password'];
+    $in_validation = $data['validation'];
+    $in_alamat = $data['alamat'];
+    $in_telepon = $data['telepon'];
+
+    $query = "INSERT INTO guru(NIP, nama, kodeKelas, password, alamat, telepon) VALUES
+        ('$in_NIP', '$in_nama', '$in_kodeKelas', '$in_password', '$in_alamat', '$in_telepon')";
+
+    if ($in_password == $in_validation) {
+        mysqli_query($database, $query);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+function readSiswa()
+{
+    $siswa = query("SELECT s.NIS, s.absen, s.nama FROM siswa s 
+        JOIN guru g ON s.kodeKelas = g.kodeKelas JOIN login l ON g.NIP = l.NIP");
+    return $siswa;
+}
+
+function readGuru()
+{
+    $guru = query("SELECT * FROM guru g JOIN login l ON g.NIP = l.NIP");
+    return $guru;
 }
 
 function readNilai($NIS)
@@ -72,49 +115,57 @@ function readAVG($NIS)
     return $AVG;
 }
 
+function readAdmin(){
+    $admin = query("SELECT * FROM login WHERE NIP = 'admin'");
+    return $admin;
+}
+
 function update($data)
 {
     global $database;
-
     $NIS = $data['submit'];
     $absen = $data['absen'];
     $nama = $data['nama'];
-    $MTK_tugas = $data["MTK_Tugas"];
-    $MTK_quiz = $data["MTK_Quiz"];
-    $MTK_uts = $data["MTK_UTS"];
-    $MTK_uas = $data["MTK_UAS"];
-    $KIM_tugas = $data["KIM_Tugas"];
-    $KIM_quiz = $data["KIM_Quiz"];
-    $KIM_uts = $data["KIM_UTS"];
-    $KIM_uas = $data["KIM_UAS"];
-    $FIS_tugas = $data["FIS_Tugas"];
-    $FIS_quiz = $data["FIS_Quiz"];
-    $FIS_uts = $data["FIS_UTS"];
-    $FIS_uas = $data["FIS_UAS"];
-    $BIO_tugas = $data["BIO_Tugas"];
-    $BIO_quiz = $data["BIO_Quiz"];
-    $BIO_uts = $data["BIO_UTS"];
-    $BIO_uas = $data["BIO_UAS"];
+    $id1 = $data['id1'];
+    $tugas1 = $data["tugas1"];
+    $quiz1 = $data["quiz1"];
+    $uts1 = $data["uts1"];
+    $uas1 = $data["uas1"];
+    $id2 = $data['id2'];
+    $tugas2 = $data["tugas2"];
+    $quiz2 = $data["quiz2"];
+    $uts2 = $data["uts2"];
+    $uas2 = $data["uas2"];
+    $id3 = $data['id3'];
+    $tugas3 = $data["tugas3"];
+    $quiz3 = $data["quiz3"];
+    $uts3 = $data["uts3"];
+    $uas3 = $data["uas3"];
+    $id4 = $data['id4'];
+    $tugas4 = $data["tugas4"];
+    $quiz4 = $data["quiz4"];
+    $uts4 = $data["uts4"];
+    $uas4 = $data["uas4"];
     
     mysqli_query($database, "UPDATE siswa 
         SET absen = '$absen', nama = '$nama'
         WHERE NIS = $NIS");
 
     mysqli_query($database, "UPDATE nilai
-        SET nilaiTugas = '$MTK_tugas', nilaiQuiz = '$MTK_quiz', nilaiUTS = '$MTK_uts', nilaiUAS = '$MTK_uas'
-        WHERE NIS = '$NIS' AND kodeMapel = 'MTK'");
+        SET nilaiTugas = '$tugas1', nilaiQuiz = '$quiz1', nilaiUTS = '$uts1', nilaiUAS = '$uas1'
+        WHERE id = '$id1'");
     
     mysqli_query($database, "UPDATE nilai
-        SET nilaiTugas = '$KIM_tugas', nilaiQuiz = '$KIM_quiz', nilaiUTS = '$KIM_uts', nilaiUAS = '$KIM_uas'
-        WHERE NIS = '$NIS' AND kodeMapel = 'KIM'");
+        SET nilaiTugas = '$tugas2', nilaiQuiz = '$quiz2', nilaiUTS = '$uts2', nilaiUAS = '$uas2'
+        WHERE id = '$id2'");
 
     mysqli_query($database, "UPDATE nilai
-        SET nilaiTugas = '$FIS_tugas', nilaiQuiz = '$FIS_quiz', nilaiUTS = '$FIS_uts', nilaiUAS = '$FIS_uas'   
-        WHERE NIS = '$NIS' AND kodeMapel = 'FIS'");
+        SET nilaiTugas = '$tugas3', nilaiQuiz = '$quiz3', nilaiUTS = '$uts3', nilaiUAS = '$uas3'
+        WHERE id = '$id3'");
     
     mysqli_query($database, "UPDATE nilai
-        SET nilaiTugas = '$BIO_tugas', nilaiQuiz = '$BIO_quiz', nilaiUTS = '$BIO_uts', nilaiUAS = '$BIO_uas'
-        WHERE NIS = '$NIS' AND kodeMapel = 'BIO'");
+        SET nilaiTugas = '$tugas4', nilaiQuiz = '$quiz4', nilaiUTS = '$uts4', nilaiUAS = '$uas4'
+        WHERE id = '$id4'");
 
     return 1;
 }
@@ -196,11 +247,24 @@ function sortnilai($data){
     }
 }
 
-function delete($absen)
+function admin(){
+    $admin = query("SELECT * FROM admin_view;");
+    return $admin;
+}
+
+function deleteSiswa($nis)
 {
     global $database;
 
-    mysqli_query($database, "DELETE FROM siswa WHERE absen = '$absen'");
+    mysqli_query($database, "DELETE FROM siswa WHERE NIS = '$nis'");
+
+    return 1;
+}
+
+function deleteGuru($nip){
+    global $database;
+
+    mysqli_query($database, "DELETE FROM guru WHERE NIP = '$nip'");
 
     return 1;
 }

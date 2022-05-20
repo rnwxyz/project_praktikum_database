@@ -63,6 +63,7 @@
                 <th><?=$eachmapel['kodeMapel']?></th>
             <?php endforeach ?>
             <th>AVG</th>
+            <th>Aksi</th>
         </tr>
 
         <?php foreach($siswa as $row) : ?>
@@ -77,6 +78,9 @@
                 <td><?=$eachnilai["AVG"]?></td>
             <?php endforeach ?>
             <td><?= $avg[0]["AVGNilai"] ?></td>
+            <td>
+                <a href="editData.php?id=<?= $row['NIS']; ?>">Edit</a> | <a href="rincianNilai.php?id=<?= $row['NIS']; ?>">Rician</a>
+            </td>
         </tr>
         <?php endforeach ?>
     </table>
