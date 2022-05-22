@@ -83,16 +83,51 @@ function createGuru($data){
     }
 }
 
+function updateGuru($data){
+    global $database;
+
+    $id = $data['id'];
+    $in_NIP = $data['NIP'];
+    $in_nama = $data['nama'];
+    $in_kodeKelas = $data['kodeKelas'];
+    $in_password = $data['password'];
+    $in_validation = $data['validation'];
+    $in_alamat = $data['alamat'];
+    $in_telepon = $data['telepon'];
+
+    $query = "UPDATE guru SET NIP = '$in_NIP', nama = '$in_nama', kodeKelas = '$in_kodeKelas', password = '$in_password', alamat = '$in_alamat', telepon = '$in_telepon'
+        WHERE NIP = '$id'";
+
+    if ($in_password == $in_validation) {
+        mysqli_query($database, $query);
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 function readSiswa()
 {
-    $siswa = query("SELECT s.NIS, s.absen, s.nama FROM siswa s 
+    $siswa = query("SELECT s.NIS, s.absen, s.nama, s.alamat, s.telepon FROM siswa s 
         JOIN guru g ON s.kodeKelas = g.kodeKelas JOIN login l ON g.NIP = l.NIP");
+    return $siswa;
+}
+
+function readSiswaSingle($id)
+{
+    $siswa = query("SELECT * FROM siswa WHERE NIS = '$id';");
     return $siswa;
 }
 
 function readGuru()
 {
     $guru = query("SELECT * FROM guru g JOIN login l ON g.NIP = l.NIP");
+    return $guru;
+}
+
+function readGuruSingle($id)
+{
+    $guru = query("SELECT * FROM guru WHERE NIP = '$id'");
     return $guru;
 }
 
@@ -267,6 +302,14 @@ function deleteGuru($nip){
     mysqli_query($database, "DELETE FROM guru WHERE NIP = '$nip'");
 
     return 1;
+}
+
+function getCategory($id){
+    if (readSiswaSingle($id) == NULL){
+        return 1;
+    } else {
+        return 2;
+    }
 }
 
 function logout()
