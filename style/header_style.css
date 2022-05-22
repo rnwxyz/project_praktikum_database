@@ -1,0 +1,26 @@
+body {
+    background-color: lightcyan;
+}
+
+.gambar2 {
+    margin-left: 2em;
+}
+
+.kelas h1 {
+
+    font-size: 3em;
+}
+
+.kelas {
+    margin-left: 10px;
+    margin-top: 2em;
+    width: 50em;
+}
+
+.namaGuru {
+    max-width: 600px;
+    margin-left: 3em;
+    background: #9d9c9c;
+    border-radius: 7px;
+    color:white;
+}
