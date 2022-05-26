@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 22, 2022 at 12:37 PM
+-- Generation Time: May 26, 2022 at 09:21 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -67,7 +67,8 @@ CREATE TABLE `guru` (
 --
 
 INSERT INTO `guru` (`NIP`, `nama`, `kodeKelas`, `password`, `alamat`, `telepon`) VALUES
-('2008561065', 'Dewa Bayu', 'MIPA1', 'bayu', 'Denpasar Barat', '082345167116');
+('2008561065', 'Dewa Bayu', 'MIPA1', 'bayu', 'Denpasar Barat', '082345167116'),
+('2008561099', 'Agung Adi', 'IIS1', 'agung', 'Sanur', '082223332223');
 
 -- --------------------------------------------------------
 
@@ -158,9 +159,9 @@ CREATE TABLE `nilai` (
 --
 
 INSERT INTO `nilai` (`NIS`, `id`, `kodeMapel`, `nilaiTugas`, `nilaiQuiz`, `nilaiUTS`, `nilaiUAS`) VALUES
-(41, 151, 'BIO', 90, 70, 90, 60),
-(41, 152, 'FIS', 90, 70, 70, 60),
-(41, 153, 'KIM', 90, 70, 90, 60),
+(41, 151, 'BIO', 80, 70, 90, 60),
+(41, 152, 'FIS', 90, 80, 70, 60),
+(41, 153, 'KIM', 90, 70, 80, 60),
 (41, 154, 'MTK', 90, 80, 70, 80),
 (42, 155, 'BIO', 70, 90, 90, 80),
 (42, 156, 'FIS', 80, 80, 80, 70),
@@ -169,7 +170,19 @@ INSERT INTO `nilai` (`NIS`, `id`, `kodeMapel`, `nilaiTugas`, `nilaiQuiz`, `nilai
 (43, 159, 'BIO', 0, 0, 0, 0),
 (43, 160, 'FIS', 0, 0, 0, 0),
 (43, 161, 'KIM', 0, 0, 0, 0),
-(43, 162, 'MTK', 0, 0, 0, 0);
+(43, 162, 'MTK', 0, 0, 0, 0),
+(44, 163, 'BIO', 0, 0, 0, 0),
+(44, 164, 'FIS', 0, 0, 0, 0),
+(44, 165, 'KIM', 0, 0, 0, 0),
+(44, 166, 'MTK', 0, 0, 0, 0),
+(45, 167, 'EKM', 0, 0, 0, 80),
+(45, 168, 'GEO', 0, 0, 80, 0),
+(45, 169, 'SJR', 0, 80, 0, 0),
+(45, 170, 'SOS', 80, 0, 0, 0),
+(46, 171, 'EKM', 0, 0, 0, 0),
+(46, 172, 'GEO', 0, 0, 0, 0),
+(46, 173, 'SJR', 0, 0, 0, 0),
+(46, 174, 'SOS', 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -191,9 +204,12 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`NIS`, `nama`, `absen`, `kodeKelas`, `alamat`, `telepon`) VALUES
-(41, 'Dewa Biara', 1, 'MIPA1', 'Ubud', '089098766787'),
+(41, 'Dewa Agus', 1, 'MIPA1', 'Ubud', '089098766787'),
 (42, 'Bagus Wirata', 2, 'MIPA1', 'Badung, Jimbaran', '086654453112'),
-(43, 'Budhiarta Suputra', 3, 'MIPA1', 'Buleleng, Pance Sari', '082654551456');
+(43, 'Budhiarta Suputra', 3, 'MIPA1', 'Buleleng, Pance Sari', '082654551456'),
+(44, 'Bagus sanjaya', 4, 'MIPA1', 'Denpasar utara', '081112223321'),
+(45, 'Widia Anjani', 1, 'IIS1', 'Nusadua', '093337344634'),
+(46, 'Santosa Nugraha', 2, 'IIS1', 'Buleleng', '098876665456');
 
 --
 -- Triggers `siswa`
@@ -314,19 +330,19 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT for table `login`
 --
 ALTER TABLE `login`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT for table `nilai`
 --
 ALTER TABLE `nilai`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=163;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
 --
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `NIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `NIS` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- Constraints for dumped tables
