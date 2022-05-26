@@ -312,6 +312,15 @@ function getCategory($id){
     }
 }
 
+function readNameAdmin($name){
+    $find = query("SELECT * FROM admin_view WHERE nama LIKE '%$name%';");
+    if($find == NULL){
+        return 1;
+    } else {
+        return $find;
+    }
+}
+
 function logout()
 {
     global $database;

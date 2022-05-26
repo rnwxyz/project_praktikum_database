@@ -5,7 +5,23 @@
         deleteSiswa($delete['id']);
         deleteGuru($delete['id']);
     }
-    $admin = admin();
+    if(isset($_POST["find"])){
+        $nama = $_POST["nama"];
+        $data = readNameAdmin($nama);
+        if ($data == 1){
+            echo "
+                <script>
+                    alert('Data Tidak Ditemukan');
+                    document.location.href = 'admin.php';
+                </script>
+            ";
+            $admin = admin();
+        } else {
+            $admin = $data;  
+        }
+    } else {
+        $admin = admin();
+    }
 ?>
 
 <!doctype html>
@@ -56,6 +72,18 @@
                     </div>
                 </div>
             </div>
+            <form class="form-inline" autocomplete="off" method="POST">
+                <div class="row g-2">
+                    <div class="col-sm-3">
+                        <div class="form-group ms-5">
+                            <input type="text" class="form-control" name="nama" id="find" placeholder="Nama">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button type="submit" name="find" class="btn btn-dark mb-2">Cari</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="container vh-100 bg-white">
             <table class="table ms-5" style="max-width: 75em;">
