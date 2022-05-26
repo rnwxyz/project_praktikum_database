@@ -37,12 +37,10 @@
 
     </head>
     <body>
-        <div class="container vh-100 bg-light">
+        <div class="container vh-100 bg-light pt-5">
             <div class="row">
-                <div class="col">
-                    <div class="title"> 
-                        <img src="asset/img/logosiwali.png" height="200em" alt="">
-                    </div>
+                <div class="col text-center">
+                    <img src="asset/img/logosiwali.png" height="200em" alt="">
                 </div>
                 <div class="col">
                     <div class="form text-center ">

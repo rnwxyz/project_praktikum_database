@@ -29,12 +29,23 @@
             }
         }
     } else {
+        if(isset($_POST["submit"])){
+            if (update($_POST) == 1) {
+                echo "
+                    <script>
+                        alert('Update Berhasil');
+                        document.location.href = 'admin.php';
+                    </script>
+                ";
+            }
+        }
         $siswa = readSiswaSingle($id);
-        $NIS = $siswa[0]['NIS'];
-        $nama = $siswa[0]['nama'];
-        $kodeKelas = $siswa[0]['kodeKelas'];
-        $alamat = $siswa[0]['alamat'];
-        $telepon = $siswa[0]['telepon'];
+        $siswa = query("SELECT NIS, absen, nama, alamat, telepon FROM 
+            siswa WHERE NIS = '$id'");
+        $nilai = query("SELECT n.id, m.namaMapel, n.NIS, n.kodeMapel, n.nilaiTugas, n.nilaiQuiz, n.nilaiUTS, n.nilaiUAS 
+	    FROM nilai n LEFT JOIN matapelajaran m ON n.kodeMapel = m.kodeMapel
+        WHERE n.NIS = '$id' ORDER BY kodeMapel DESC;");
+        $count = 0;
     }
 
     $admin = readAdmin();
@@ -147,19 +158,54 @@
                             </div>
                         </div>
                     </form>
-    
-                    <!-- Logic Login or Back -->
-                    <?php if ($admin == NULL):?>
-                        <form action="index.php" autocomplete="off" style="max-width: 250px;margin:auto">
-                            <div class="mt-3 text-start">
-                                <button class="btn btn-lg btn-secondary btn-sm">Login</button> 
-                            </div>
-                        </form>
-                    <?php endif ?>
                 </div>
             </div>
         <?php else: ?>
-        
+            <!-- table -->
+            <div class="container bg-white pt-5" style="height: 29em;">
+                <form action="" method="POST" autocomplete="off">
+                    <div class="row">
+                        <div class="col" style="max-width: 30em;">
+                            <div class="edit pt-3" style="max-width:280px; margin:auto; font-size:small;">
+                                <label class="sr-only" for="nama" >Nama Siswa </label>
+                                <input class="form-control form-control-sm" type="text" name="nama" id="nama" value="<?= $siswa[0]['nama']?>" required>
+                                <label class="sr-only mt-3" for="absen" >Absen </label>
+                                <input class="form-control form-control-sm" type="text" name="absen" id="nama" value="<?= $siswa[0]['absen']?>"required>
+                                <label class="sr-only mt-3" for="alamat" >Alamat</label>
+                                <input class="form-control form-control-sm" type="text" name="alamat" id="alamat" value="<?= $siswa[0]['alamat']?>"required>
+                                <label class="sr-only mt-3" for="telepon" >Telepon</label>
+                                <input class="form-control form-control-sm" type="text" name="telepon" id="telepon" value="<?= $siswa[0]['telepon']?>"required>
+                                <button class="btn btn-lg btn-primary btn-sm mt-5" type="submit" name="submit" value="<?= $siswa[0]['NIS']?>">Update</button> 
+                            </div>
+                        </div>
+                        <div class="col">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">MATA PELAJARAN</th>
+                                        <th scope="col">TUGAS</th>
+                                        <th scope="col">QUIZ</th>
+                                        <th scope="col">UTS</th>
+                                        <th scope="col">UAS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach($nilai as $eachnilai) : ?>
+                                        <?php $count++; ?>
+                                        <tr>
+                                            <td><input type="text" name="id<?=$count?>" value="<?=$eachnilai['id']?>" hidden><?= $eachnilai['namaMapel']?></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="tugas<?=$count?>" value="<?= $eachnilai['nilaiTugas']?>" size="3" required></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="quiz<?=$count?>" value="<?= $eachnilai['nilaiQuiz']?>" size="3" required></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="uts<?=$count?>" value="<?= $eachnilai['nilaiUTS']?>" size="3" required></td>
+                                            <td><input class="form-control form-control-sm" type="text" name="uas<?=$count?>" value="<?= $eachnilai['nilaiUAS']?>" size="3" required></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </form>
+            </div>
         <?php endif ?>
 
         <!-- Optional JavaScript; choose one of the two! -->
