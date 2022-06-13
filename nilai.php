@@ -2,7 +2,7 @@
 
     require 'function.php';
 
-    if(isset($_POST["sort"])){
+    if(isset($_POST["sort"]) && $_POST["sortby"] != NULL){
         $siswa = sortnilai($_POST);
     } else {
         $siswa = query("SELECT s.NIS, s.absen, s.nama  FROM siswa s 
@@ -86,6 +86,7 @@
 
                     <!-- sortby -->
                     <select class="form-select btn-sm d-inline" name="sortby" size="1" aria-label="size 3 select example" style="max-width: 100px">
+                        <option value="">SortBy</option>
                         <?php foreach($mapel as $eachmapel): ?>
                             <option value="<?=$eachmapel['kodeMapel']?>"><?=$eachmapel['kodeMapel']?></option>
                         <?php endforeach ?>

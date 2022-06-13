@@ -95,7 +95,9 @@ function updateGuru($data){
     $in_alamat = $data['alamat'];
     $in_telepon = $data['telepon'];
 
-    $query = "UPDATE guru SET NIP = '$in_NIP', nama = '$in_nama', kodeKelas = '$in_kodeKelas', password = '$in_password', alamat = '$in_alamat', telepon = '$in_telepon'
+    $query = "UPDATE guru SET NIP = '$in_NIP', nama = '$in_nama', 
+        kodeKelas = '$in_kodeKelas', password = '$in_password', 
+        alamat = '$in_alamat', telepon = '$in_telepon'
         WHERE NIP = '$id'";
 
     if ($in_password == $in_validation) {
@@ -152,6 +154,11 @@ function readAVG($NIS)
 
 function readAdmin(){
     $admin = query("SELECT * FROM login WHERE NIP = 'admin'");
+    return $admin;
+}
+
+function admin(){
+    $admin = query("SELECT * FROM admin_view;");
     return $admin;
 }
 
@@ -280,11 +287,6 @@ function sortnilai($data){
             return $result;
         }
     }
-}
-
-function admin(){
-    $admin = query("SELECT * FROM admin_view;");
-    return $admin;
 }
 
 function deleteSiswa($nis)
