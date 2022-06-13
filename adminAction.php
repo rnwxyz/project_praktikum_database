@@ -104,7 +104,7 @@
                         <a class="nav-link" aria-current="page" href="admin.php">Kembali</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="nilai.php">Edit Data</a>
+                        <a class="nav-link active" aria-current="page">Edit Data</a>
                     </li>
                 </ul>
             </div>

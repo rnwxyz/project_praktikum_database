@@ -72,7 +72,7 @@
                         <a class="nav-link" aria-current="page" href="nilai.php">Kembali</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="createData.php" >Edit Data Siswa</a>
+                        <a class="nav-link active" aria-current="page">Edit Data Siswa</a>
                     </li>
                 </ul>
             </div>

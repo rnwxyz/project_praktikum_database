@@ -38,10 +38,10 @@
                             </div>
                         </div>   
                         <div class="gambar1 navbar-brand" >
-                            <img src="asset/img/logosiwali.png" alt="logosiwali" height="100em">
+                            <img src="asset/img/logosiwali.png" alt="logosiwali" height="120em">
                         </div>
                         <div class="gambar2 navbar-brand" >
-                            <img src="asset/img/logosma1.png" alt="logosiwali" height="100em">
+                            <img src="asset/img/logosma1.png" alt="logosiwali" height="120em">
                         </div>
                     </div>
                 </nav>
@@ -60,7 +60,7 @@
                         <a class="nav-link" aria-current="page" href="nilai.php">Kembali</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="createData.php" >Rincian Data Siswa</a>
+                        <a class="nav-link active" aria-current="page">Rincian Data Siswa</a>
                     </li>
                 </ul>
             </div>
